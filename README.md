@@ -1,7 +1,7 @@
 Instruções de execução
 ------------------
 * Para execução, rodar com Main da classe WebhookStatistics passando opcionalmente o caminho com o nome arquivo de log como argumento. Por Default, caso não seja passado argumento será utilizado o arquivo log.txt do diretório corrente.
-* > java WebhookStatistics
+* > java -jar bin\webhookStatistic.jar
 
 PROBLEMA
 ========
