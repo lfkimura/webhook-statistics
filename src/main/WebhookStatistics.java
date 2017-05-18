@@ -60,17 +60,16 @@ public class WebhookStatistics {
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new FileReader(logFileName));
-			String sCurrentLine;
-
 			List<Webhook> webhooks = new ArrayList<Webhook>();
-
-			// reading data
-			while ((sCurrentLine = br.readLine()) != null) {
-				Matcher webhookMatcher = webhookPattern.matcher(sCurrentLine);
-				if (webhookMatcher.matches()) {
-					webhooks.add(new Webhook(webhookMatcher.group(1), Integer.valueOf(webhookMatcher.group(2))));
+			br.lines().parallel().forEach(sCurrentLine -> {
+				if(sCurrentLine !=null) {
+					Matcher webhookMatcher = webhookPattern.matcher(sCurrentLine);
+					if (webhookMatcher.matches()) {
+						webhooks.add(new Webhook(webhookMatcher.group(1), Integer.valueOf(webhookMatcher.group(2))));
+					}
 				}
-			}
+				
+			});
 			return webhooks;
 		} catch (IOException e) {
 			e.printStackTrace();
