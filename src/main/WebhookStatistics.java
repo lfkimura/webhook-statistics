@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,16 +15,19 @@ import model.Webhook;
 
 public class WebhookStatistics {
 
-	private static String defaultLogName = "log2.txt";
+	private static String defaultLogName = "log.txt";
 
 	static Pattern webhookPattern = Pattern
 			.compile(".*level=info response_body=\"\" request_to=\"(http.*)\".*response_status=\"([0-9]{3})\"");
 
 	public static void main(String[] args) {
+		Date start = new Date();
 		String logFileName = buscaNomeArquivoLog(args);
 
 		extraiRelatorio(logFileName);
-
+		Date finish = new Date();
+		System.out.println("time elapsed: " + (finish.getTime() - start.getTime()));
+		
 	}
 
 	private static void extraiRelatorio(String logFileName) {
@@ -37,6 +41,7 @@ public class WebhookStatistics {
 		WebhookManager manager = new WebhookManager(webhooks);
 
 		// generate results
+		System.out.println("total webhooks: " + webhooks.size());
 		System.out.println("\n##########URLS MAIS ACESSADAS################\n");
 		for (UrlStatistic urlstats : manager.getTopNWebhooks(3)) {
 

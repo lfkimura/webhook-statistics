@@ -27,9 +27,9 @@ public class UrlStatistic implements Comparable<UrlStatistic> {
 
 	@Override
 	public int compareTo(UrlStatistic other) {
-		if (this.quantidade > other.quantidade)
+		if (this.quantidade > other.getQuantidade())
 			return -1;
-		if (this.quantidade < other.quantidade)
+		if (this.quantidade < other.getQuantidade())
 			return 1;
 		return 0;
 	}

@@ -29,16 +29,20 @@ public class WebhookManager {
 
 	private void updateTables() {
 		webhooks.parallelStream().forEach(w -> {
-			insertQuantidadeWebHook(w);
-			insertStatus(w);
+			if (w != null) {
+				insertQuantidadeWebHook(w);
+				insertStatus(w);
+			}
 		});
 		updateTopWebhooks();
 
 	}
 
 	private void updateTopWebhooks() {
-		webQuantidadeTable.keySet().parallelStream()
-				.forEach(url -> topWebhooks.add(new UrlStatistic(url, webQuantidadeTable.get(url))));
+		webQuantidadeTable.keySet().stream().forEach(url -> {
+			if (url != null)
+				topWebhooks.add(new UrlStatistic(url, webQuantidadeTable.get(url)));
+		});
 		Collections.sort(topWebhooks);
 	}
 
@@ -53,11 +57,10 @@ public class WebhookManager {
 		if (statusQuantidadeTable.get(web.getStatus()) == null)
 			statusQuantidadeTable.put(web.getStatus(), 1);
 		else
-			statusQuantidadeTable.put(web.getStatus(), statusQuantidadeTable.get(web.getUrl()) + 1);
-
+			statusQuantidadeTable.put(web.getStatus(), statusQuantidadeTable.get(web.getStatus()) + 1);
 	}
 
-	private synchronized void insertQuantidadeWebHook(Webhook web) {
+	private void insertQuantidadeWebHook(Webhook web) {
 		if (webQuantidadeTable.get(web.getUrl()) == null)
 			webQuantidadeTable.put(web.getUrl(), 1);
 		else
