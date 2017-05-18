@@ -42,11 +42,11 @@ public class WebhookManager {
 		webQuantidadeTable.keySet().stream().forEach(url -> {
 			if (url != null)
 				topWebhooks.add(new UrlStatistic(url, webQuantidadeTable.get(url)));
-		});
-		Collections.sort(topWebhooks);
+		});		
 	}
 
 	public List<UrlStatistic> getTopNWebhooks(int n) {
+		Collections.sort(topWebhooks);
 		if (topWebhooks.size() < n)
 			return topWebhooks;
 		else
